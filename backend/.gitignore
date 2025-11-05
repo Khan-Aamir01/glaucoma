@@ -1,0 +1,66 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Flask instance folder (holds config, uploads, etc.)
+instance/
+
+# Flask specific files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+*.out
+*.err
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# PyInstaller
+*.spec
+build/
+dist/
+
+# Jupyter notebooks (if you test in notebooks)
+.ipynb_checkpoints
+
+# VSCode / IDE
+.vscode/
+.idea/
+*.swp
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Environment variables files
+.env
+.env.*
+*.env
+
+# Uploads / media (if not meant for repo)
+uploads/
+media/
+*.pt
+*.pth
+*.h5
+models/
