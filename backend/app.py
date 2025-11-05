@@ -35,25 +35,34 @@ cdr_model.eval()
 
 # Preprocessor
 class CDRPreprocessor:
-    def __init__(self, target_size=512):
+    def __init__(self, target_size=256):  # changed to 256
         self.target_size = target_size
 
     def preprocess(self, image):
+        # Resize to 256x256
         img = cv2.resize(image, (self.target_size, self.target_size), interpolation=cv2.INTER_AREA)
+        
+        # Extract green channel
         green_channel = img[:, :, 1] if len(img.shape) == 3 else img
+        
+        # Apply CLAHE
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
         enhanced = clahe.apply(green_channel)
+        
+        # Normalize to 0-1
         normalized = enhanced.astype(np.float32) / 255.0
+        
+        # Convert to 3 channels
         img_3ch = np.stack([normalized]*3, axis=-1)
-
-    # ImageNet normalization (matches training)
+        
+        # ImageNet normalization
         mean = np.array([0.485, 0.456, 0.406])
         std = np.array([0.229, 0.224, 0.225])
         img_3ch = (img_3ch - mean) / std
 
-        return img_3ch
+        return img_3ch  # ✅ make sure to return the processed image
 
-preprocessor = CDRPreprocessor(target_size=512)
+preprocessor = CDRPreprocessor(target_size=256)
 
 def calculate_cdr(image_path):
     """Run CDR model and return area-based CDR"""
@@ -69,8 +78,7 @@ def calculate_cdr(image_path):
     # Compute OD and OC areas
     od_area = np.sum(preds == 1)
     oc_area = np.sum(preds == 2)
-    cdr_value = oc_area / od_area if od_area > 0 else 0.0
-
+    cdr_value = (oc_area / od_area)/255 if od_area > 0 else 0.0
     return round(float(cdr_value), 3)
 
 # ================== UPLOAD API ==================
