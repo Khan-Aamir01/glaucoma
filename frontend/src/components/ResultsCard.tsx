@@ -5,6 +5,7 @@ interface ResultsCardProps {
   decision: string; // "Normal", "Suspicious", or "Glaucoma"
   confidence: string; // "High" or "Moderate"
   risk: number;
+  cdr: number;
   explanation: string;
   filename: string;
 }
@@ -14,6 +15,7 @@ export const ResultsCard = ({
   decision,
   confidence,
   risk,
+  cdr,
   explanation,
   filename,
 }: ResultsCardProps) => {
@@ -74,13 +76,12 @@ export const ResultsCard = ({
                 <p className="text-lg font-medium">
                   Confidence:{" "}
                   <span
-                    className={`${
-                      confidence === "High"
+                    className={`${confidence === "High"
                         ? "text-green-600"
                         : confidence === "Moderate"
-                        ? "text-yellow-500"
-                        : "text-gray-500"
-                    } font-semibold transition-colors`}
+                          ? "text-yellow-500"
+                          : "text-gray-500"
+                      } font-semibold transition-colors`}
                   >
                     {confidence}
                   </span>
@@ -90,15 +91,29 @@ export const ResultsCard = ({
                 <p className="text-lg font-medium">
                   Risk Score:{" "}
                   <span
-                    className={`${
-                      risk < 0.3
+                    className={`${risk < 0.3
                         ? "text-green-500"
                         : risk < 0.7
-                        ? "text-yellow-400"
-                        : "text-red-500"
-                    } font-semibold transition-colors`}
+                          ? "text-yellow-400"
+                          : "text-red-500"
+                      } font-semibold transition-colors`}
                   >
                     {(risk * 100).toFixed(1)}%
+                  </span>
+                </p>
+
+                {/* CDR */}
+                <p className="text-lg font-medium">
+                  CDR:{" "}
+                  <span
+                    className={`${cdr < 0.6
+                        ? "text-green-500"
+                        : cdr < 0.7
+                          ? "text-yellow-400"
+                          : "text-red-500"
+                      } font-semibold transition-colors`}
+                  >
+                    {cdr.toFixed(2)}
                   </span>
                 </p>
 

@@ -190,6 +190,7 @@ export const HeroSection = () => {
             decision={result.decision}
             confidence={result.confidence}
             risk={result.risk_score}
+            cdr = {result.cdr_value}
             explanation={result.explanation}
             filename={result.filename}
           />
